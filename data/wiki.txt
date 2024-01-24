@@ -1,0 +1,66 @@
+### Wiki Page: AWS EC2 Instance Management and Security Group Configuration
+
+#### Introduction
+This document serves as a guide for managing AWS EC2 instances and configuring security groups. It is based on a developer's terminal session log, focusing on high-level goals and step-wise instructions.
+
+#### High-Level Goals
+1. **Instance Management**: Launch, describe, stop, start, and terminate an EC2 instance.
+2. **Security Group Configuration**: Modify instance attributes and create/authorize security groups.
+
+#### Step-wise Instructions
+
+**1. Launching an EC2 Instance**
+   - Command:
+     ```bash
+     aws ec2 run-instances --image-id ami-1234567890abcdef0 --count 1 --instance-type t2.micro --key-name MyKeyPair --security-group-ids sg-12345678 --subnet-id subnet-1234abcd
+     ```
+   - Goal: Start a new EC2 instance with specified parameters.
+
+**2. Describing EC2 Instances**
+   - Command:
+     ```bash
+     aws ec2 describe-instances
+     ```
+   - Goal: Retrieve details of all running instances. Note: Using a specific instance ID provides details about that instance.
+
+**3. Stopping an EC2 Instance**
+   - Command:
+     ```bash
+     aws ec2 stop-instances --instance-ids i-1234567890abcdef0
+     ```
+   - Debugging: Ensure the instance is in a running state before attempting to stop it.
+
+**4. Starting an EC2 Instance**
+   - Command:
+     ```bash
+     aws ec2 start-instances --instance-ids i-1234567890abcdef0
+     ```
+   - Debugging: Verify the instance is in a stopped state before starting it.
+
+**5. Terminating an EC2 Instance**
+   - Command:
+     ```bash
+     aws ec2 terminate-instances --instance-ids i-1234567890abcdef0
+     ```
+   - Goal: Permanently delete the instance.
+
+**6. Modifying Instance Type**
+   - Command:
+     ```bash
+     aws ec2 modify-instance-attribute --instance-id i-1234567890abcdef0 --instance-type "{\"Value\": \"t2.large\"}"
+     ```
+   - Goal: Change the instance type to meet different requirements.
+
+**7. Configuring Security Groups**
+   - Creating a Security Group:
+     ```bash
+     aws ec2 create-security-group --group-name MySecurityGroup --description "My security group"
+     ```
+   - Authorizing Ingress on Security Group:
+     ```bash
+     aws ec2 authorize-security-group-ingress --group-id sg-903004f8 --protocol tcp --port 22 --cidr 0.0.0.0/0
+     ```
+   - Debugging: Ensure correct protocol and port are specified. Invalid protocol or port will result in an error.
+
+#### Conclusion
+This document summarizes the essential commands for managing EC2 instances and configuring security groups in AWS. It is crucial for team members to understand each step and the potential errors to efficiently manage AWS resources.
